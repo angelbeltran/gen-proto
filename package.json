@@ -1,0 +1,23 @@
+{
+  "name": "gen-proto",
+  "version": "0.0.1",
+  "description": "Generates protobuf files from json",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha test/test.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {},
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "mocha": "^3.1.2"
+  },
+  "files": [
+    "index.js",
+    "bin"
+  ],
+  "bin": {
+    "generate-protobuf": "./bin/index.js"
+  }
+}

@@ -1,0 +1,72 @@
+{
+  "filename": "test/test-output.proto",
+  "syntax": 2,
+  "package": "some.package",
+  "options": {
+    "some_option": "some_string/some_string"
+  },
+  "imports": [
+    {
+      "filename": "some/path/to/a/publicly/imported/file",
+      "public": true
+    },
+    {
+      "filename": "some/path/to/an/imported/file"
+    }
+  ],
+  "messages": [
+    {
+      "name": "SomeMessageType",
+      "description": "A simple description of the message type below",
+      "schema": [
+        {
+          "type": "string",
+          "name": "field1"
+        },
+        {
+          "type": "int32",
+          "name": "field2",
+          "repated": true
+        },
+        {
+          "type": "some_type",
+          "name": "field3",
+          "repated": true
+        },
+        {
+          "type": "another_type",
+          "name": "field4",
+          "key": 777
+        }
+      ]
+    }
+  ],
+  "services": [
+    {
+      "name": "SomeService",
+      "methods": [
+        {
+          "name": "SomeMethod",
+          "req": "SomeMessageType",
+          "res": "AnotherMessageType"
+        }
+      ]
+    },
+    {
+      "name": "AnotherService",
+      "methods": [
+        {
+          "name": "AnotherMethod",
+          "req": "CrazyMessageType",
+          "res": "CrazierMessageType"
+        },
+        {
+          "name": "LastMethod",
+          "req": "CraziestMessageType",
+          "res": "CraziesterMessageType"
+        }
+      ]
+
+    }
+  ]
+}

@@ -1,0 +1,43 @@
+{
+  filename: String,           // file name
+  syntax: Number,             // by default 3 (should be protobuf version 2 or 3)
+  package: String,            // package name
+  options: {},                // string to string mapping of options
+  imports: [                  // all the import statements
+    {
+      filename: String,
+      public: Boolean         // public import?
+    },
+    ...
+  ],
+  messages: [                 // TODO: allow for nesting of message types later
+    {
+      name: String,           // name of message type
+      description: String,    // comment to write above the message type definition
+      schema: [               // message type definition
+        {
+          type: String,       // type of data
+          name: String,       // name of field
+          key: Number,        // number of field (otherwise default enumeration)
+          repeated: Boolean,  // array?
+        },
+        ...
+      ]
+    },
+    ...
+  ],
+  services: [                 // services to include
+    {
+      name: String,           // name of service
+      methods: [              // methods to include in service
+        {
+          name: String,       // name of rpc method
+          req: String,        // name of request message type
+          res: String,        // name of response message type
+        },
+        ...
+      ]
+    },
+    ...
+  ]
+}

@@ -1,0 +1,24 @@
+syntax = "proto2";
+package some.package;
+
+option some_option = "some_string/some_string";
+
+import public "some/path/to/a/publicly/imported/file";
+import "some/path/to/an/imported/file";
+
+// A simple description of the message type below
+message SomeMessageType {
+  string field1 = 1;
+  int32 field2 = 2;
+  some_type field3 = 3;
+  another_type field4 = 777;
+}
+
+service SomeService {
+  rpc SomeMethod(SomeMessageType) returns (AnotherMessageType);
+}
+
+service AnotherService {
+  rpc AnotherMethod(CrazyMessageType) returns (CrazierMessageType);
+  rpc LastMethod(CraziestMessageType) returns (CraziesterMessageType);
+}
