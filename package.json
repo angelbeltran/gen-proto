@@ -18,6 +18,6 @@
     "bin"
   ],
   "bin": {
-    "generate-protobuf": "./bin/index.js"
+    "gen-proto": "./bin/index.js"
   }
 }
