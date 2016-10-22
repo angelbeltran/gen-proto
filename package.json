@@ -6,7 +6,7 @@
   "scripts": {
     "test": "mocha test/test.js"
   },
-  "author": "",
+  "author": "Angel Beltran",
   "license": "ISC",
   "dependencies": {},
   "devDependencies": {
@@ -19,5 +19,9 @@
   ],
   "bin": {
     "gen-proto": "./bin/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/angelbeltran/gen-proto.git"
   }
 }
