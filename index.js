@@ -13,35 +13,20 @@ module.exports = function generateProtobuf (protoDef, cb) {
   writeSyntax(protoDef.syntax, file)
 
   // package name
-  writePackageName(protoDef.package, file)
-  file.push('')
+  writePackageName(protoDef.package, file) && file.push('')
 
   // option statements
-  writeOptions(protoDef.options, file)
+  protoDef.options && writeOptions(protoDef.options, file) && file.push('')
 
   // import statements
-  writeImports(protoDef.imports, file)
+  protoDef.imports && writeImports(protoDef.imports, file) && file.push('')
 
   // messages
   // TODO: handle proto2 required and optional keywords
-  if (protoDef.messages) {
-    writeMessages(protoDef.messages, file)
-    file.push('')
-  }
+  protoDef.messages && writeMessages(protoDef.messages, file) && file.push('')
 
   // service
-  if (protoDef.services && protoDef.services.length) {
-    protoDef.services.forEach((service) => {
-      file.push('service ' + service.name + ' {')
-      if (service.methods) {
-        service.methods.forEach((method) => {
-          file.push('  rpc ' + method.name + '(' + method.req + ') returns (' + method.res + ');')
-        })
-      }
-      file.push('}')
-      file.push('')
-    })
-  }
+  protoDef.services && writeServices(protoDef.services, file)
 
   // write file
   if (typeof cb === 'function') {
@@ -77,19 +62,21 @@ function writePackageName (packageName, file) {
   }
 
   file.push('package ' + packageName + ';')
+  return true
 }
 
 /* Writes the options of the proto def to the file string array
  *
  */
 function writeOptions (options, file) {
-  if (options) {
-    if (Object.keys(options).length) {
-      Object.keys(options).forEach((opt) => {
-        file.push('option ' + opt + ' = "' + options[opt] + '";')
-      })
-      file.push('')
-    }
+  if (typeof options !== 'object') {
+    throw new Error('options must be an object')
+  }
+  if (Object.keys(options).length) {
+    Object.keys(options).forEach((opt) => {
+      file.push('option ' + opt + ' = "' + options[opt] + '";')
+    })
+    return true
   }
 }
 
@@ -97,15 +84,15 @@ function writeOptions (options, file) {
  *
  */
 function writeImports (imports, file) {
-  if (imports) {
+  if (imports.length) {
     imports.forEach((imp) => {
       file.push('import ' + (imp.public ? 'public ' : '') + '"' + imp.filename + '";')
     })
-    file.push('')
+    return true
   }
 }
 
-/* Writes the message of a proto def to the file string array
+/* Writes the messages of a proto def to the file string array
  * 
  */
 function writeMessages (messages, file, level) {
@@ -116,25 +103,49 @@ function writeMessages (messages, file, level) {
     padding += '  '
   }
 
-  messages.forEach((msg) => {
-    if (msg.description) {
-      file.push(padding + '// ' + msg.description)
-    }
-    file.push(padding + 'message ' + msg.name + ' {')
-    if (msg.schema) {
-      msg.schema.forEach((field, i) => {
-        file.push(padding + '  ' + (field.repeated ? 'repeated ' : '') + field.type + ' ' + field.name + ' = ' + (field.key ? field.key : (i + 1)) + ';')
-      })
-    }
+  if (messages.length) {
+    messages.forEach((msg) => {
+      if (msg.description) {
+        file.push(padding + '// ' + msg.description)
+      }
+      file.push(padding + 'message ' + msg.name + ' {')
+      if (msg.schema) {
+        msg.schema.forEach((field, i) => {
+          file.push(padding + '  ' + (field.repeated ? 'repeated ' : '') + field.type + ' ' + field.name + ' = ' + (field.key ? field.key : (i + 1)) + ';')
+        })
+      }
 
-    if (msg.messages) {
+      if (msg.messages) {
+        file.push('')
+        writeMessages(msg.messages, file, level + 1)
+      }
+
+      file.push(padding + '}')
+      file.push(padding)
+    })
+
+    file.pop()
+
+    return true
+  }
+}
+
+\* Writes the services of the proto def to the file string array
+ *
+ *
+function writeServices (services, file) {
+  if (services.length) {
+    services.forEach((service) => {
+      file.push('service ' + service.name + ' {')
+      if (service.methods) {
+        service.methods.forEach((method) => {
+          file.push('  rpc ' + method.name + '(' + method.req + ') returns (' + method.res + ');')
+        })
+      }
+      file.push('}')
       file.push('')
-      writeMessages(msg.messages, file, level + 1)
-    }
-
-    file.push(padding + '}')
-    file.push(padding)
-  })
-
-  file.pop()
+    })
+    file.pop()
+    return true
+  }
 }
