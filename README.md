@@ -45,6 +45,9 @@ require('gen-proto')('some/json/file.json')
           repeated: Boolean,  // array?
         },
         ...
+      ],
+      messages: [
+        // nested message types of the same form as above. Arbitrary levels of nesting permitted.
       ]
     },
     ...
