@@ -15,7 +15,6 @@ describe('Protobuf Generator', function () {
         return done(err)
       }
 
-      console.log('__dirname', __dirname)
       fs.readFile(path.resolve(__dirname, 'test-output.proto'), (err, data) => {
         if (err) {
           return done(err)

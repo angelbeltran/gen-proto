@@ -26,12 +26,12 @@
         {
           "type": "int32",
           "name": "field2",
-          "repated": true
+          "repeated": true
         },
         {
           "type": "some_type",
           "name": "field3",
-          "repated": true
+          "repeated": true
         },
         {
           "type": "another_type",

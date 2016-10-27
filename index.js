@@ -80,8 +80,6 @@ module.exports = function generateProtobuf (protoDef, cb) {
   }
 
   // write file
-  console.log('filename:', protoDef.filename)
-  console.log('__dirname:', __dirname)
   if (typeof cb === 'function') {
     require('fs').writeFile(protoDef.filename, file.join('\n'), cb)
   } else {

@@ -9,8 +9,8 @@ import "some/path/to/an/imported/file";
 // A simple description of the message type below
 message SomeMessageType {
   string field1 = 1;
-  int32 field2 = 2;
-  some_type field3 = 3;
+  repeated int32 field2 = 2;
+  repeated some_type field3 = 3;
   another_type field4 = 777;
 }
 
