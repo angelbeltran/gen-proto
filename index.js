@@ -26,14 +26,10 @@ module.exports = function generateProtobuf (protoDef, cb) {
   protoDef.messages && writeMessages(protoDef.messages, file) && file.push('')
 
   // service
-  protoDef.services && writeServices(protoDef.services, file)
+  protoDef.services && writeServices(protoDef.services, file) && file.push('')
 
   // write file
-  if (typeof cb === 'function') {
-    require('fs').writeFile(protoDef.filename, file.join('\n'), cb)
-  } else {
-    require('fs').writeFileSync(protoDef.filename, file.join('\n'))
-  }
+  writeToFile(protoDef.filename, file, cb)
 }
 
 /* Writes the syntax of a proto def to the file string array
@@ -93,7 +89,7 @@ function writeImports (imports, file) {
 }
 
 /* Writes the messages of a proto def to the file string array
- * 
+ *
  */
 function writeMessages (messages, file, level) {
   level = level || 0
@@ -130,9 +126,9 @@ function writeMessages (messages, file, level) {
   }
 }
 
-\* Writes the services of the proto def to the file string array
+/* Writes the services of the proto def to the file string array
  *
- *
+ */
 function writeServices (services, file) {
   if (services.length) {
     services.forEach((service) => {
@@ -148,4 +144,16 @@ function writeServices (services, file) {
     file.pop()
     return true
   }
+}
+
+/* Writes the file string array to file
+ *
+ */
+function writeToFile (filename, file, cb) {
+  cb = cb || function () {}
+  if (typeof cb !== 'function') {
+    throw new Error('callback must be a function')
+  }
+
+  require('fs').writeFile(filename, file.join('\n'), cb)
 }
