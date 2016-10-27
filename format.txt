@@ -22,6 +22,9 @@
           repeated: Boolean,  // array?
         },
         ...
+      ],
+      messages: [
+        // for nested message types. arbitrary levels of nesting supported
       ]
     },
     ...

@@ -29,14 +29,57 @@
           "repeated": true
         },
         {
-          "type": "some_type",
+          "type": "SomeType",
           "name": "field3",
           "repeated": true
         },
         {
-          "type": "another_type",
+          "type": "AnotherType",
           "name": "field4",
           "key": 777
+        }
+      ],
+      "messages": [
+        {
+          "name": "SomeType",
+          "schema": [
+            {
+              "type": "string",
+              "name": "id"
+            }
+          ]
+        },
+        {
+          "name": "AnotherType",
+          "description": "A nested message type's description",
+          "schema": [
+            {
+              "type": "string",
+              "name": "id"
+            },
+            {
+              "type": "int32",
+              "name": "count",
+              "repeated": false
+            },
+            {
+              "type": "DeeplyNestedType",
+              "name": "deep",
+              "repeated": true
+            }
+          ],
+          "messages": [
+            {
+              "name": "DeeplyNestedType",
+              "description": "A deeply nested message type's description",
+              "schema": [
+                {
+                  "type": "string",
+                  "name": "id"
+                }
+              ]
+            }
+          ]
         }
       ]
     }

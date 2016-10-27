@@ -10,8 +10,24 @@ import "some/path/to/an/imported/file";
 message SomeMessageType {
   string field1 = 1;
   repeated int32 field2 = 2;
-  repeated some_type field3 = 3;
-  another_type field4 = 777;
+  repeated SomeType field3 = 3;
+  AnotherType field4 = 777;
+
+  message SomeType {
+    string id = 1;
+  }
+  
+  // A nested message type's description
+  message AnotherType {
+    string id = 1;
+    int32 count = 2;
+    repeated DeeplyNestedType deep = 3;
+
+    // A deeply nested message type's description
+    message DeeplyNestedType {
+      string id = 1;
+    }
+  }
 }
 
 service SomeService {
